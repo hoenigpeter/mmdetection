@@ -3,7 +3,7 @@ _base_ = [
     './yolox_tta.py'
 ]
 
-img_scale = (640, 640)  # width, height
+img_scale = (720, 720)  # width, height
 
 # model settings
 model = dict(
@@ -39,7 +39,7 @@ model = dict(
         act_cfg=dict(type='Swish')),
     bbox_head=dict(
         type='YOLOXHead',
-        num_classes=80,
+        num_classes=30,
         in_channels=128,
         feat_channels=128,
         stacked_convs=2,
@@ -70,8 +70,8 @@ model = dict(
     test_cfg=dict(score_thr=0.01, nms=dict(type='nms', iou_threshold=0.65)))
 
 # dataset settings
-data_root = 'datasets/coco/'
-dataset_type = 'CocoDataset'
+data_root = 'datasets/tless/'
+dataset_type = 'TlessDataset'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
@@ -124,8 +124,8 @@ train_dataset = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='annotations/instances_train2017.json',
-        data_prefix=dict(img='train2017/'),
+        ann_file='tless_annotations_train.json',
+        data_prefix=dict(img='train_pbr/'),
         pipeline=[
             dict(type='LoadImageFromFile', backend_args=backend_args),
             dict(type='LoadAnnotations', with_bbox=True)
@@ -163,8 +163,8 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='annotations/instances_val2017.json',
-        data_prefix=dict(img='val2017/'),
+        ann_file='tless_annotations_test.json',
+        data_prefix=dict(img='test_primesense/'),
         test_mode=True,
         pipeline=test_pipeline,
         backend_args=backend_args))
@@ -172,13 +172,13 @@ test_dataloader = val_dataloader
 
 val_evaluator = dict(
     type='CocoMetric',
-    ann_file=data_root + 'annotations/instances_val2017.json',
+    ann_file=data_root + 'tless_annotations_test.json',
     metric='bbox',
     backend_args=backend_args)
 test_evaluator = val_evaluator
 
 # training settings
-max_epochs = 300
+max_epochs = 30
 num_last_epochs = 15
 interval = 10
 
