@@ -125,4 +125,4 @@ work_dirs/
 mmdet.egg-info
 outputs/
 work_diffs/
-datasets/
+data/

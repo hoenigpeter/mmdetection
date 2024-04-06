@@ -70,7 +70,7 @@ model = dict(
     test_cfg=dict(score_thr=0.01, nms=dict(type='nms', iou_threshold=0.65)))
 
 # dataset settings
-data_root = 'datasets/tless/'
+data_root = 'data/tless/'
 dataset_type = 'TlessDataset'
 
 # Example to use different file client
