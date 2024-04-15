@@ -70,7 +70,8 @@ model = dict(
     test_cfg=dict(score_thr=0.01, nms=dict(type='nms', iou_threshold=0.65)))
 
 # dataset settings
-data_root = 'data/tless/'
+data_root = 'data/tless_random_texture/'
+data_original_root = 'data/tless/'
 dataset_type = 'TlessDataset'
 
 # Example to use different file client
@@ -100,8 +101,8 @@ train_pipeline = [
         img_scale=img_scale,
         ratio_range=(0.8, 1.6),
         pad_val=114.0),
-    dict(type='YOLOXHSVRandomAug'),
-    #dict(type='RandomRGB', prob=1.0),
+    #dict(type='YOLOXHSVRandomAug'),
+    dict(type='RandomRGB', p=1.0),
     dict(type='RandomFlip', prob=0.5),
     # According to the official implementation, multi-scale
     # training is not considered here but in the
@@ -125,7 +126,7 @@ train_dataset = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='tless_annotations_train.json',
+        ann_file='tless_random_texture_annotations_train.json',
         data_prefix=dict(img='train_pbr/'),
         pipeline=[
             dict(type='LoadImageFromFile', backend_args=backend_args),
@@ -163,7 +164,7 @@ val_dataloader = dict(
     sampler=dict(type='DefaultSampler', shuffle=False),
     dataset=dict(
         type=dataset_type,
-        data_root=data_root,
+        data_root=data_original_root,
         ann_file='tless_annotations_test.json',
         data_prefix=dict(img='test_primesense/'),
         test_mode=True,
@@ -173,7 +174,7 @@ test_dataloader = val_dataloader
 
 val_evaluator = dict(
     type='CocoMetric',
-    ann_file=data_root + 'tless_annotations_test.json',
+    ann_file=data_original_root + 'tless_annotations_test.json',
     metric='bbox',
     backend_args=backend_args)
 test_evaluator = val_evaluator

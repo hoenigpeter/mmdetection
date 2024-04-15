@@ -24,9 +24,6 @@ from mmdet.structures.bbox import HorizontalBoxes, autocast_box_type
 from mmdet.structures.mask import BitmapMasks, PolygonMasks
 from mmdet.utils import log_img_scale
 
-import imgaug.augmenters as iaa
-from imgaug.augmenters import (Sometimes, GaussianBlur,Add,AdditiveGaussianNoise, Multiply,CoarseDropout,Invert,pillike)
-
 try:
     from imagecorruptions import corrupt
 except ImportError:
@@ -2965,39 +2962,6 @@ class YOLOXHSVRandomAug(BaseTransform):
         repr_str += f'value_delta={self.value_delta})'
         return repr_str
 
-@TRANSFORMS.register_module()
-class RandomRGB(BaseTransform):
-
-    def __init__(self,
-                 p: float = 1.0) -> None:
-        self.p = p
-        self.seq = iaa.Sequential([
-            Sometimes(0.5 * p, CoarseDropout( p=0.2, size_percent=0.05) ),
-            Sometimes(0.4 * p, GaussianBlur((0., 3.))),
-            Sometimes(0.3 * p, pillike.EnhanceSharpness(factor=(0., 50.))),
-            Sometimes(0.3 * p, pillike.EnhanceContrast(factor=(0.2, 50.))),
-            Sometimes(0.5 * p, pillike.EnhanceBrightness(factor=(0.1, 6.))),
-            Sometimes(0.3 * p, pillike.EnhanceColor(factor=(0., 20.))),
-            Sometimes(0.5 * p, Add((-25, 25), per_channel=0.3)),
-            Sometimes(0.3 * p, Invert(0.2, per_channel=True)),
-            Sometimes(0.5 * p, Multiply((0.6, 1.4), per_channel=0.5)),
-            Sometimes(0.5 * p, Multiply((0.6, 1.4))),
-            Sometimes(0.1 * p, AdditiveGaussianNoise(scale=10, per_channel=True)),
-            Sometimes(0.5 * p, iaa.contrast.LinearContrast((0.5, 2.2), per_channel=0.3)),
-            ], random_order=True)
-
-    def transform(self, results: dict) -> dict:
-        img = results['img']
-
-        img = self.seq(image=img)
-
-        results['img'] = img
-        return results
-
-    def __repr__(self):
-        repr_str = self.__class__.__name__
-        repr_str += f'(severity={self.severity}, '
-        return repr_str
 
 @TRANSFORMS.register_module()
 class CopyPaste(BaseTransform):
