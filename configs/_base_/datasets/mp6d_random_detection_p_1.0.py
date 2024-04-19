@@ -1,6 +1,6 @@
 # dataset settings
 data_root = 'data/mp6d_random_texture/'
-data_root_original = 'data/mp6d'
+data_root_original = 'data/mp6d/'
 dataset_type = 'MP6DDataset'
 
 # Example to use different file client
