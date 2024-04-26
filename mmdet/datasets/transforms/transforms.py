@@ -2970,7 +2970,8 @@ class RandomRGB(BaseTransform):
 
     def __init__(self,
                  p: float = 0.8,
-                 scaling_factor: float = 1.0) -> None:
+                 scaling_factor: float = 1.0,
+                 augmentation_indices: List[int] = None) -> None:
 
         self.p = p
         # self.seq = iaa.Sequential([
@@ -2990,20 +2991,42 @@ class RandomRGB(BaseTransform):
 
         self.scaling_factor = scaling_factor
 
-        self.seq = iaa.Sequential([
-            Sometimes(0.5 * p, CoarseDropout( p=0.2, size_percent=0.05 * scaling_factor) ),
-            Sometimes(0.4 * p, GaussianBlur((0., 3. * scaling_factor))),
-            Sometimes(0.3 * p, pillike.EnhanceSharpness(factor=(0., 50. * scaling_factor))),
-            Sometimes(0.3 * p, pillike.EnhanceContrast(factor=(0.2 * scaling_factor, 50. * scaling_factor))),
-            Sometimes(0.5 * p, pillike.EnhanceBrightness(factor=(0.1 * scaling_factor, 6. * scaling_factor))),
-            Sometimes(0.3 * p, pillike.EnhanceColor(factor=(0., 20. * scaling_factor))),
-            Sometimes(0.5 * p, Add((-25 * scaling_factor, 25 * scaling_factor), per_channel=0.3)),
-            Sometimes(0.3 * p, Invert(0.2 * scaling_factor, per_channel=True)),
-            Sometimes(0.5 * p, Multiply((0.6 * scaling_factor, 1.4 * scaling_factor), per_channel=0.5)),
-            Sometimes(0.5 * p, Multiply((0.6 * scaling_factor, 1.4 * scaling_factor))),
-            Sometimes(0.1 * p, AdditiveGaussianNoise(scale=10 * scaling_factor, per_channel=True)),
-            Sometimes(0.5 * p, iaa.contrast.LinearContrast((0.5 * scaling_factor, 2.2 * scaling_factor), per_channel=0.3)),
-            ], random_order=True)
+        # self.seq = iaa.Sequential([
+        #     Sometimes(0.5 * p, CoarseDropout( p=0.2, size_percent=0.05 * scaling_factor) ),
+        #     Sometimes(0.4 * p, GaussianBlur((0., 3. * scaling_factor))),
+        #     Sometimes(0.3 * p, pillike.EnhanceSharpness(factor=(0., 50. * scaling_factor))),
+        #     Sometimes(0.3 * p, pillike.EnhanceContrast(factor=(0.2 * scaling_factor, 50. * scaling_factor))),
+        #     Sometimes(0.5 * p, pillike.EnhanceBrightness(factor=(0.1 * scaling_factor, 6. * scaling_factor))),
+        #     Sometimes(0.3 * p, pillike.EnhanceColor(factor=(0., 20. * scaling_factor))),
+        #     Sometimes(0.5 * p, Add((-25 * scaling_factor, 25 * scaling_factor), per_channel=0.3)),
+        #     Sometimes(0.3 * p, Invert(0.2 * scaling_factor, per_channel=True)),
+        #     Sometimes(0.5 * p, Multiply((0.6 * scaling_factor, 1.4 * scaling_factor), per_channel=0.5)),
+        #     Sometimes(0.5 * p, Multiply((0.6 * scaling_factor, 1.4 * scaling_factor))),
+        #     Sometimes(0.1 * p, AdditiveGaussianNoise(scale=10 * scaling_factor, per_channel=True)),
+        #     Sometimes(0.5 * p, iaa.contrast.LinearContrast((0.5 * scaling_factor, 2.2 * scaling_factor), per_channel=0.3)),
+        #     ], random_order=True)
+
+        augmentations = [
+            CoarseDropout( p=0.2, size_percent=0.05 * scaling_factor),
+            GaussianBlur((0., 3. * scaling_factor)),
+            pillike.EnhanceSharpness(factor=(0., 50. * scaling_factor)),
+            pillike.EnhanceContrast(factor=(0.2 * scaling_factor, 50. * scaling_factor)),
+            pillike.EnhanceBrightness(factor=(0.1 * scaling_factor, 6. * scaling_factor)),
+            pillike.EnhanceColor(factor=(0., 20. * scaling_factor)),
+            Add((-25 * scaling_factor, 25 * scaling_factor), per_channel=0.3),
+            Invert(0.2 * scaling_factor, per_channel=True),
+            Multiply((0.6 * scaling_factor, 1.4 * scaling_factor), per_channel=0.5),
+            Multiply((0.6 * scaling_factor, 1.4 * scaling_factor)),
+            AdditiveGaussianNoise(scale=10 * scaling_factor, per_channel=True),
+            iaa.contrast.LinearContrast((0.5 * scaling_factor, 2.2 * scaling_factor), per_channel=0.3)
+        ]
+
+        if augmentation_indices is None or len(augmentation_indices) == 0:
+            self.selected_augmentations = augmentations
+        else:
+            self.selected_augmentations = [augmentations[i] for i in augmentation_indices]
+
+        self.seq = iaa.Sequential(self.selected_augmentations, random_order=True)
 
     def transform(self, results: dict) -> dict:
         img = results['img']
