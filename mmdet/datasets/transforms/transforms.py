@@ -2969,21 +2969,40 @@ class YOLOXHSVRandomAug(BaseTransform):
 class RandomRGB(BaseTransform):
 
     def __init__(self,
-                 p: float = 1.0) -> None:
+                 p: float = 0.8,
+                 scaling_factor: float = 1.0) -> None:
+
         self.p = p
+        # self.seq = iaa.Sequential([
+        #     Sometimes(0.5 * p, CoarseDropout( p=0.2, size_percent=0.05) ),
+        #     Sometimes(0.4 * p, GaussianBlur((0., 3.))),
+        #     Sometimes(0.3 * p, pillike.EnhanceSharpness(factor=(0., 50.))),
+        #     Sometimes(0.3 * p, pillike.EnhanceContrast(factor=(0.2, 50.))),
+        #     Sometimes(0.5 * p, pillike.EnhanceBrightness(factor=(0.1, 6.))),
+        #     Sometimes(0.3 * p, pillike.EnhanceColor(factor=(0., 20.))),
+        #     Sometimes(0.5 * p, Add((-25, 25), per_channel=0.3)),
+        #     Sometimes(0.3 * p, Invert(0.2, per_channel=True)),
+        #     Sometimes(0.5 * p, Multiply((0.6, 1.4), per_channel=0.5)),
+        #     Sometimes(0.5 * p, Multiply((0.6, 1.4))),
+        #     Sometimes(0.1 * p, AdditiveGaussianNoise(scale=10, per_channel=True)),
+        #     Sometimes(0.5 * p, iaa.contrast.LinearContrast((0.5, 2.2), per_channel=0.3)),
+        #     ], random_order=True)
+
+        self.scaling_factor = scaling_factor
+
         self.seq = iaa.Sequential([
-            Sometimes(0.5 * p, CoarseDropout( p=0.2, size_percent=0.05) ),
-            Sometimes(0.4 * p, GaussianBlur((0., 3.))),
-            Sometimes(0.3 * p, pillike.EnhanceSharpness(factor=(0., 50.))),
-            Sometimes(0.3 * p, pillike.EnhanceContrast(factor=(0.2, 50.))),
-            Sometimes(0.5 * p, pillike.EnhanceBrightness(factor=(0.1, 6.))),
-            Sometimes(0.3 * p, pillike.EnhanceColor(factor=(0., 20.))),
-            Sometimes(0.5 * p, Add((-25, 25), per_channel=0.3)),
-            Sometimes(0.3 * p, Invert(0.2, per_channel=True)),
-            Sometimes(0.5 * p, Multiply((0.6, 1.4), per_channel=0.5)),
-            Sometimes(0.5 * p, Multiply((0.6, 1.4))),
-            Sometimes(0.1 * p, AdditiveGaussianNoise(scale=10, per_channel=True)),
-            Sometimes(0.5 * p, iaa.contrast.LinearContrast((0.5, 2.2), per_channel=0.3)),
+            Sometimes(0.5 * p, CoarseDropout( p=0.2, size_percent=0.05 * scaling_factor) ),
+            Sometimes(0.4 * p, GaussianBlur((0., 3. * scaling_factor))),
+            Sometimes(0.3 * p, pillike.EnhanceSharpness(factor=(0., 50. * scaling_factor))),
+            Sometimes(0.3 * p, pillike.EnhanceContrast(factor=(0.2 * scaling_factor, 50. * scaling_factor))),
+            Sometimes(0.5 * p, pillike.EnhanceBrightness(factor=(0.1 * scaling_factor, 6. * scaling_factor))),
+            Sometimes(0.3 * p, pillike.EnhanceColor(factor=(0., 20. * scaling_factor))),
+            Sometimes(0.5 * p, Add((-25 * scaling_factor, 25 * scaling_factor), per_channel=0.3)),
+            Sometimes(0.3 * p, Invert(0.2 * scaling_factor, per_channel=True)),
+            Sometimes(0.5 * p, Multiply((0.6 * scaling_factor, 1.4 * scaling_factor), per_channel=0.5)),
+            Sometimes(0.5 * p, Multiply((0.6 * scaling_factor, 1.4 * scaling_factor))),
+            Sometimes(0.1 * p, AdditiveGaussianNoise(scale=10 * scaling_factor, per_channel=True)),
+            Sometimes(0.5 * p, iaa.contrast.LinearContrast((0.5 * scaling_factor, 2.2 * scaling_factor), per_channel=0.3)),
             ], random_order=True)
 
     def transform(self, results: dict) -> dict:
