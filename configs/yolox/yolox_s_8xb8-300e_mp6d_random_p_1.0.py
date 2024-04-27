@@ -102,7 +102,7 @@ train_pipeline = [
         ratio_range=(0.8, 1.6),
         pad_val=114.0),
     #dict(type='YOLOXHSVRandomAug'),
-    dict(type='RandomRGB', p=1.0),
+    dict(type='RandomRGB', p=0.8, scaling_factor=1, augmentation_indices=[0]),
     dict(type='RandomFlip', prob=0.5),
     # According to the official implementation, multi-scale
     # training is not considered here but in the
