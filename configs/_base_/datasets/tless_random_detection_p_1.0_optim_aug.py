@@ -23,7 +23,7 @@ train_pipeline = [
     dict(type='LoadAnnotations', with_bbox=True),
     dict(type='Resize', scale=(1333, 800), keep_ratio=True),
     dict(type='RandomFlip', prob=0.5),
-    dict(type='RandomRGB', p=1.0, scaling_factor=2/3, augmentation_indices=[2,5,6,8,9,10,11]),
+    dict(type='RandomRGB', p=0.8, scaling_factor=2/3, augmentation_indices=[2,5,8,11]),
     dict(type='PackDetInputs')
 ]
 test_pipeline = [
