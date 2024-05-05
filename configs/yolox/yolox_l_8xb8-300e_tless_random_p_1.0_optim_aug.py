@@ -1,4 +1,4 @@
-_base_ = './yolox_s_8xb8-300e_tless_random_p_1.0_optim_aug_0.67.py'
+_base_ = './yolox_s_8xb8-300e_tless_random_p_1.0_optim_aug.py'
 
 # model settings
 model = dict(
