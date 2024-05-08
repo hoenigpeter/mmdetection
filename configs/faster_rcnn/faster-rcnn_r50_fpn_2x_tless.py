@@ -1,5 +1,5 @@
 _base_ = [
     '../_base_/models/faster-rcnn_r50_fpn.py',
-    '../_base_/datasets/tless_detection_p_1.0.py',
+    '../_base_/datasets/tless_detection.py',
     '../_base_/schedules/schedule_2x.py', '../_base_/default_runtime.py'
 ]
