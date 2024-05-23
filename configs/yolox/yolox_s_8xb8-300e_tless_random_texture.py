@@ -101,7 +101,8 @@ train_pipeline = [
         img_scale=img_scale,
         ratio_range=(0.8, 1.6),
         pad_val=114.0),
-    dict(type='YOLOXHSVRandomAug'),
+    # dict(type='YOLOXHSVRandomAug'),
+    dict(type='RandomRGB', p=0.8 * 0.4, scaling_factor=1, augmentation_indices=[]),
     dict(type='RandomFlip', prob=0.5),
     # According to the official implementation, multi-scale
     # training is not considered here but in the
@@ -181,7 +182,7 @@ test_evaluator = val_evaluator
 # training settings
 max_epochs = 30
 num_last_epochs = 15
-interval = 10
+interval = 1
 
 train_cfg = dict(max_epochs=max_epochs, val_interval=interval)
 
