@@ -2947,6 +2947,7 @@ class YOLOXHSVRandomAug(BaseTransform):
 
     def transform(self, results: dict) -> dict:
         img = results['img']
+        img = img.copy()
         hsv_gains = self._get_hsv_gains()
         img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV).astype(np.int16)
 

@@ -23,8 +23,7 @@ train_pipeline = [
     dict(type='LoadAnnotations', with_bbox=True),
     dict(type='Resize', scale=(1333, 800), keep_ratio=True),
     dict(type='RandomFlip', prob=0.5),
-    dict(type='YOLOXHSVRandomAug'),
-    #dict(type='RandomRGB', p=0.8 * 0.4, scaling_factor=1, augmentation_indices=[]),
+    dict(type='RandomRGB', p=0.8, scaling_factor=1, augmentation_indices=[]),
 
     dict(type='PackDetInputs')
 ]
