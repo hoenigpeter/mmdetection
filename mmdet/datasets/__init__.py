@@ -37,6 +37,7 @@ from .youtube_vis_dataset import YouTubeVISDataset
 
 from .tless import TlessDataset
 from .mp6d import MP6DDataset
+from .itodd import ItoddDataset
 
 __all__ = [
     'XMLDataset', 'CocoDataset', 'DeepFashionDataset', 'VOCDataset',
