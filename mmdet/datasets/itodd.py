@@ -7,10 +7,10 @@ from mmengine.fileio import get_local_path
 
 from mmdet.registry import DATASETS
 from .api_wrappers import COCO
-from .coco import CocoDataset
+from .coco_custom import CocoCustomDataset
 
 @DATASETS.register_module()
-class ItoddDataset(CocoDataset):
+class ItoddDataset(CocoCustomDataset):
     """Objects365 v1 dataset for detection."""
 
     METAINFO = {

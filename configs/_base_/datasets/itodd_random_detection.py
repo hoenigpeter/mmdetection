@@ -1,5 +1,5 @@
 # dataset settings
-data_root = 'data/itodd/'
+data_root = 'data/itodd_random_texture/'
 dataset_type = 'ItoddDataset'
 
 # Example to use different file client
@@ -21,6 +21,7 @@ train_pipeline = [
     dict(type='LoadImageFromFile', backend_args=backend_args),
     dict(type='LoadAnnotations', with_bbox=True),
     dict(type='Resize', scale=(1333, 800), keep_ratio=True),
+    dict(type='RandomRGB', p=0.8, scaling_factor=1, augmentation_indices=[]),
     dict(type='RandomFlip', prob=0.5),
     dict(type='PackDetInputs')
 ]
@@ -43,7 +44,7 @@ train_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='itodd_annotations_train.json',
+        ann_file='itodd_random_annotations_train.json',
         data_prefix=dict(img='train_pbr/'),
         filter_cfg=dict(filter_empty_gt=True, min_size=32),
         pipeline=train_pipeline,
@@ -62,19 +63,7 @@ val_dataloader = dict(
         test_mode=True,
         pipeline=test_pipeline,
         backend_args=backend_args))
-test_dataloader = dict(
-    batch_size=1,
-    num_workers=2,
-    persistent_workers=True,
-    drop_last=False,
-    sampler=dict(type='DefaultSampler', shuffle=False),
-    dataset=dict(
-        type=dataset_type,
-        data_root=data_root,
-        ann_file='itodd_annotations_test.json',
-        data_prefix=dict(img='test/'),
-        test_mode=True,
-        pipeline=test_pipeline))
+test_dataloader = val_dataloader
 
 val_evaluator = dict(
     type='CocoMetric',
@@ -82,12 +71,7 @@ val_evaluator = dict(
     metric='bbox',
     format_only=False,
     backend_args=backend_args)
-test_evaluator = dict(
-    type='CocoCustomMetric',
-    metric='bbox',
-    format_only=True,
-    ann_file=data_root + 'itodd_annotations_test.json',
-    outfile_prefix='./work_dirs/coco_detection/test')
+test_evaluator = val_evaluator
 
 # inference on test dataset and
 # format the output results for submission.
