@@ -71,7 +71,12 @@ val_evaluator = dict(
     metric='bbox',
     format_only=False,
     backend_args=backend_args)
-test_evaluator = val_evaluator
+test_evaluator = dict(
+    type='CocoCustomMetric',
+    metric='bbox',
+    format_only=True,
+    ann_file=data_root + 'itodd_annotations_test.json',
+    outfile_prefix='./work_dirs/coco_detection/test')
 
 # inference on test dataset and
 # format the output results for submission.

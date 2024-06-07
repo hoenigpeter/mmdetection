@@ -35,6 +35,7 @@ test_pipeline = [
         meta_keys=('img_id', 'img_path', 'ori_shape', 'img_shape',
                    'scale_factor'))
 ]
+
 train_dataloader = dict(
     batch_size=2,
     num_workers=2,
@@ -49,6 +50,7 @@ train_dataloader = dict(
         filter_cfg=dict(filter_empty_gt=True, min_size=32),
         pipeline=train_pipeline,
         backend_args=backend_args))
+
 val_dataloader = dict(
     batch_size=1,
     num_workers=2,
@@ -63,6 +65,7 @@ val_dataloader = dict(
         test_mode=True,
         pipeline=test_pipeline,
         backend_args=backend_args))
+
 test_dataloader = dict(
     batch_size=1,
     num_workers=2,
