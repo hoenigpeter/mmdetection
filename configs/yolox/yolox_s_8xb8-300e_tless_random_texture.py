@@ -1,5 +1,5 @@
 _base_ = [
-    '../_base_/schedules/schedule_1x.py', '../_base_/default_runtime.py',
+    '../_base_/schedules/schedule_30.py', '../_base_/default_runtime.py',
     './yolox_tta.py'
 ]
 
@@ -102,7 +102,7 @@ train_pipeline = [
         ratio_range=(0.8, 1.6),
         pad_val=114.0),
     # dict(type='YOLOXHSVRandomAug'),
-    dict(type='RandomRGB', p=0.8 * 0.4, scaling_factor=1, augmentation_indices=[]),
+    dict(type='RandomRGB', p=0.8, scaling_factor=1, augmentation_indices=[]),
     dict(type='RandomFlip', prob=0.5),
     # According to the official implementation, multi-scale
     # training is not considered here but in the
