@@ -39,6 +39,7 @@ from .youtube_vis_dataset import YouTubeVISDataset
 from .tless import TlessDataset
 from .mp6d import MP6DDataset
 from .itodd import ItoddDataset
+from .keypose import KeyposeDataset
 
 __all__ = [
     'XMLDataset', 'CocoDataset', 'CocoCustomDataset','DeepFashionDataset', 'VOCDataset',
@@ -54,5 +55,5 @@ __all__ = [
     'BaseSegDataset', 'ADE20KSegDataset', 'CocoSegDataset',
     'ADE20KInstanceDataset', 'iSAIDDataset', 'V3DetDataset', 'ConcatDataset',
     'ODVGDataset', 'MDETRStyleRefCocoDataset', 'DODDataset',
-    'CustomSampleSizeSampler', 'Flickr30kDataset', 'TlessDataset', 'MP6DDataset', 'ItoddDataset',
+    'CustomSampleSizeSampler', 'Flickr30kDataset', 'TlessDataset', 'MP6DDataset', 'ItoddDataset', 'KeyposeDataset',
 ]
