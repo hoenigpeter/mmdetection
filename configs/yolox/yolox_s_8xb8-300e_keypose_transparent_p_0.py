@@ -164,7 +164,7 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='tless_annotations_test.json',
+        ann_file='keypose_annotations_test.json',
         data_prefix=dict(img='test_primesense/'),
         test_mode=True,
         pipeline=test_pipeline,
