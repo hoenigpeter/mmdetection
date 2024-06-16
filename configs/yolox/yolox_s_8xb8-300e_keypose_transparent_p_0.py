@@ -70,7 +70,7 @@ model = dict(
     test_cfg=dict(score_thr=0.01, nms=dict(type='nms', iou_threshold=0.65)))
 
 # dataset settings
-data_root = 'data/keypose/'
+data_root = 'data/keypose_transparent/'
 dataset_type = 'KeyposeDataset'
 
 # Example to use different file client
@@ -100,8 +100,8 @@ train_pipeline = [
         img_scale=img_scale,
         ratio_range=(0.8, 1.6),
         pad_val=114.0),
-    #dict(type='YOLOXHSVRandomAug'),
-    dict(type='RandomRGB', p=0.8, scaling_factor=1, augmentation_indices=[]),
+    dict(type='YOLOXHSVRandomAug'),
+    #dict(type='RandomRGB', p=0.8, scaling_factor=1, augmentation_indices=[]),
     dict(type='RandomFlip', prob=0.5),
     # According to the official implementation, multi-scale
     # training is not considered here but in the

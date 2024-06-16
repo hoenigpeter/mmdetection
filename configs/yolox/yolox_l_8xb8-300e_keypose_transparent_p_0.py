@@ -1,4 +1,4 @@
-_base_ = './yolox_s_8xb8-300e_keypose.py'
+_base_ = './yolox_s_8xb8-300e_keypose_transparent_p_0.py'
 
 # model settings
 model = dict(
