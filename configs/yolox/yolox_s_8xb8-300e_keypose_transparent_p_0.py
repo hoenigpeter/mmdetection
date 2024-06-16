@@ -125,7 +125,7 @@ train_dataset = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='keypose_annotations_train.json',
+        ann_file='keypose_transparent_annotations_train.json',
         data_prefix=dict(img='train_pbr/'),
         pipeline=[
             dict(type='LoadImageFromFile', backend_args=backend_args),
