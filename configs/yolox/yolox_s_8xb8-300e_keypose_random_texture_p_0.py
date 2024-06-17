@@ -71,7 +71,7 @@ model = dict(
 
 # dataset settings
 data_root = 'data/keypose_random_texture/'
-data_original_root = 'data/keypose/'
+data_original_root = 'data/keypose_transparent/'
 dataset_type = 'KeyposeDataset'
 
 # Example to use different file client
@@ -166,7 +166,7 @@ val_dataloader = dict(
         type=dataset_type,
         data_root=data_original_root,
         ann_file='keypose_annotations_test.json',
-        data_prefix=dict(img='test_primesense/'),
+        data_prefix=dict(img='test/'),
         test_mode=True,
         pipeline=test_pipeline,
         backend_args=backend_args))
