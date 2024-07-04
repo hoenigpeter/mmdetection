@@ -24,7 +24,6 @@ train_pipeline = [
     dict(type='Resize', scale=(1333, 800), keep_ratio=True),
     dict(type='RandomFlip', prob=0.5),
     dict(type='RandomRGB', p=0.8, scaling_factor=1, augmentation_indices=[]),
-
     dict(type='PackDetInputs')
 ]
 test_pipeline = [
