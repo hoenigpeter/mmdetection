@@ -85,6 +85,7 @@ def main():
         cfg.optim_wrapper.loss_scale = 'dynamic'
 
     # enable automatically scaling LR
+    print(cfg)
     if args.auto_scale_lr:
         if 'auto_scale_lr' in cfg and \
                 'enable' in cfg.auto_scale_lr and \

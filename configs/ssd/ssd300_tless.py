@@ -1,5 +1,5 @@
 _base_ = [
-    '../_base_/models/ssd300_tless.py', '../_base_/datasets/tless_detection_p_0.py',
+    '../_base_/models/ssd300_tless.py', '../_base_/datasets/tless_detection.py',
     '../_base_/schedules/schedule_30.py', '../_base_/default_runtime.py'
 ]
 
@@ -73,4 +73,4 @@ custom_hooks = [
 # NOTE: `auto_scale_lr` is for automatically scaling LR,
 # USER SHOULD NOT CHANGE ITS VALUES.
 # base_batch_size = (8 GPUs) x (8 samples per GPU)
-auto_scale_lr = dict(base_batch_size=64)
+auto_scale_lr = dict(base_batch_size=2)
