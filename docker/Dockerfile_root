@@ -45,9 +45,4 @@ RUN pip install openmim && \
 #     && cd /mmdetection \
 #     && pip install --no-cache-dir -e .
 
-# Create a new user and set permissions
-RUN groupadd -r myuser && useradd -r -m -g myuser myuser
-RUN chown -R myuser:myuser /mmdetection
-
-USER myuser
 WORKDIR /mmdetection
