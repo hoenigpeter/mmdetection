@@ -109,13 +109,13 @@ train_pipeline = [
         min_crop_size=0.3),
     dict(type='Resize', scale=(input_size, input_size), keep_ratio=False),
     dict(type='RandomFlip', prob=0.5),
+    dict(type='RandomRGB', p=0.4, scaling_factor=1, augmentation_indices=[]),  
     dict(
         type='PhotoMetricDistortion',
         brightness_delta=32,
         contrast_range=(0.5, 1.5),
         saturation_range=(0.5, 1.5),
         hue_delta=18),
-    dict(type='RandomRGB', p=0.4, scaling_factor=1, augmentation_indices=[]),        
     dict(type='PackDetInputs')
 ]
 test_pipeline = [
