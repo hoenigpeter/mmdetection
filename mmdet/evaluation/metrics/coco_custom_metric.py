@@ -237,8 +237,8 @@ class CocoCustomMetric(BaseMetric):
             # bbox results
             for i, label in enumerate(labels):
                 data = dict()
-                data['scene_id'] = 1
-                data['image_id'] = image_id
+                data['scene_id'] = image_id // 1000
+                data['image_id'] = image_id % 1000
                 data['bbox'] = self.xyxy2xywh(bboxes[i])
                 data['score'] = float(scores[i])
                 data['category_id'] = self.cat_ids[label]

@@ -169,14 +169,32 @@ val_dataloader = dict(
         test_mode=True,
         pipeline=test_pipeline,
         backend_args=backend_args))
-test_dataloader = val_dataloader
+test_dataloader = dict(
+    batch_size=8,
+    num_workers=4,
+    persistent_workers=True,
+    drop_last=False,
+    sampler=dict(type='DefaultSampler', shuffle=False),
+    dataset=dict(
+        type=dataset_type,
+        data_root=data_root,
+        ann_file='tless_annotations_test.json',
+        data_prefix=dict(img='test_primesense/'),
+        test_mode=True,
+        pipeline=test_pipeline,
+        backend_args=backend_args))
 
 val_evaluator = dict(
     type='CocoMetric',
     ann_file=data_root + 'tless_annotations_test.json',
     metric='bbox',
     backend_args=backend_args)
-test_evaluator = val_evaluator
+test_evaluator = dict(
+    type='CocoCustomMetric',
+    metric='bbox',
+    format_only=True,
+    ann_file=data_root + 'tless_annotations_test.json',
+    outfile_prefix='./work_dirs/detection_tless/test')
 
 # training settings
 max_epochs = 30
