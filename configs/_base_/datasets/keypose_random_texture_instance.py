@@ -1,7 +1,7 @@
 # dataset settings
-data_root = 'data/itodd_random_texture/'
-data_original_root = 'data/itodd/'
-dataset_type = 'ItoddDataset'
+data_root = 'data/keypose_random_texture/'
+data_original_root = 'data/keypose_transparent/'
+dataset_type = 'KeyposeDataset'
 
 # Example to use different file client
 # Method 1: simply set the data root and let the file I/O module
@@ -44,7 +44,7 @@ train_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='itodd_annotations_train.json',
+        ann_file='keypose_random_texture_annotations_train.json',
         data_prefix=dict(img='train_pbr/'),
         filter_cfg=dict(filter_empty_gt=True, min_size=32),
         pipeline=train_pipeline,
@@ -58,8 +58,8 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_original_root,
-        ann_file='itodd_annotations_val.json',
-        data_prefix=dict(img='val/'),
+        ann_file='keypose_annotations_test.json',
+        data_prefix=dict(img='test/'),
         test_mode=True,
         pipeline=test_pipeline,
         backend_args=backend_args))
@@ -67,7 +67,7 @@ test_dataloader = val_dataloader
 
 val_evaluator = dict(
     type='CocoMetric',
-    ann_file=data_original_root + 'itodd_annotations_val.json',
+    ann_file=data_original_root + 'keypose_annotations_test.json',
     metric=['bbox', 'segm'],
     format_only=False,
     backend_args=backend_args)
