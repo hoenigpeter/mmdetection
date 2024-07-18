@@ -11,4 +11,4 @@
 #SBATCH --mail-user=hoenig@acin.tuwien.ac.at
 #SBATCH --mail-type=BEGIN,END,FAIL
 
-python tools/train.py configs/deformable_detr/deformable-detr_r50_16xb2-50e_keypose_transparent.py --auto-scale-lr
+python tools/train.py configs/deformable_detr/deformable-detr_r50_16xb2-50e_keypose_transparent.py
