@@ -6,5 +6,5 @@ docker run \
 --shm-size=8gb --env="DISPLAY" \
 --volume="/home/hoenig/temp/mmdetection:/mmdetection" \
 --volume="/hdd2/mmdetection:/mmdetection/work_dirs_hdd" \
---volume="/hdd/datasets_bop:/mmdetection/data" \
+--volume="/ssd3/datasets_bop:/mmdetection/data" \
 --name=mmdetectionv0 mmdetection
